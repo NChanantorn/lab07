@@ -1,0 +1,85 @@
+<!-- ตัวอย่างที่ 10: การสร้างเกมง่ายๆ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ตัวอย่างที่ 10</title>
+    <style>
+        #gameArea {
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            position: relative;
+            display: none; /* ซ่อนพื้นที่เกมตอนเริ่มต้น */
+        }
+        #target {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            position: absolute;
+            cursor: pointer;
+        }
+        #startButton {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>เกมคลิกเป้าหมาย</h3>
+    <p id="status">กดปุ่ม Start เพื่อเริ่มเกม</p>
+    <p>คะแนน: <span id="score">0</span></p>
+    <button id="startButton" onclick="startGame()">Start</button>
+    <div id="gameArea">
+        <div id="target" onclick="hitTarget()"></div>
+    </div>
+
+    <script>
+        let score = 0;
+        let gameTimer;
+
+        function startGame() {
+            // รีเซ็ตคะแนน
+            score = 0;
+            document.getElementById("score").textContent = score;
+            document.getElementById("status").textContent = "เกมกำลังทำงาน...";
+            
+            // แสดงพื้นที่เกมและซ่อนปุ่ม Start
+            document.getElementById("gameArea").style.display = "block";
+            document.getElementById("startButton").style.display = "none";
+
+            // เริ่มนับเวลา 30 วินาที
+            gameTimer = setTimeout(endGame, 30000);
+        }
+
+        function hitTarget() {
+            if (!gameTimer) return; // ถ้าเกมยังไม่เริ่ม ไม่ให้เพิ่มคะแนน
+
+            // เพิ่มคะแนน
+            score++;
+            document.getElementById("score").textContent = score;
+
+            // สุ่มตำแหน่งใหม่
+            let gameArea = document.getElementById("gameArea");
+            let target = document.getElementById("target");
+
+            let maxX = gameArea.offsetWidth - target.offsetWidth;
+            let maxY = gameArea.offsetHeight - target.offsetHeight;
+
+            let newX = Math.floor(Math.random() * maxX);
+            let newY = Math.floor(Math.random() * maxY);
+
+            target.style.left = newX + "px";
+            target.style.top = newY + "px";
+        }
+
+        function endGame() {
+            clearTimeout(gameTimer);
+            gameTimer = null;
+
+            // แสดงข้อความ Game Over และปุ่ม Start ใหม่
+            document.getElementById("status").textContent = "Game Over! กด Start เพื่อเล่นใหม่";
+            document.getElementById("gameArea").style.display = "none";
+            document.getElementById("startButton").style.display = "block";
+        }
+    </script>
+</body>
+</html>

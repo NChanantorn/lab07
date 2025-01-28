@@ -1,0 +1,40 @@
+<!-- ตัวอย่างที่ 14: นาฬิกาดิจิตอล (Digita Clock) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตัวอย่างที่ 14</title>
+  <style>
+    .clock {
+      font-size: 2em;
+      font-family: monospace;
+      padding: 10px;
+      border: 2px solid #333;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div id="example14">
+    <h3>14. นาฬิกาดิจิทัล</h3>
+    <div id="clock" class="clock"></div>
+  </div>
+
+  <script>
+    // ฟังก์ชันอัปเดตเวลา
+    function updateClock() {
+      const now = new Date();
+      // แปลงรูปแบบเวลาเป็น HH:MM:SS
+      const time = now.toLocaleTimeString();
+      // อัปเดตเวลาบนหน้าจอ
+      document.getElementById("clock").textContent = time;
+    }
+
+    // ตั้งฟังก์ชันอัปเดตทุก 1 วินาที
+    setInterval(updateClock, 1000);
+    // เรียกครั้งแรกทันที
+    updateClock();
+  </script>
+</body>
+</html>
